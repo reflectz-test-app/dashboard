@@ -1,10 +1,4 @@
 import {Component, Inject, LOCALE_ID, OnDestroy, TemplateRef, ViewChild} from '@angular/core';
-import {
-  MatCardModule
-} from "@angular/material/card";
-import {MatDividerModule} from "@angular/material/divider";
-import {MatProgressBarModule} from "@angular/material/progress-bar";
-import {MatButtonModule} from "@angular/material/button";
 import {AsyncPipe, DatePipe, JsonPipe, NgIf, NgTemplateOutlet, TitleCasePipe} from "@angular/common";
 import {
   FormControl,
@@ -15,19 +9,25 @@ import {
   FormGroup,
   AbstractControl
 } from '@angular/forms';
+import {distinctUntilChanged, map, Observable, of, startWith, Subject, takeUntil} from "rxjs";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {
+  MatCardModule
+} from "@angular/material/card";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
-import {distinctUntilChanged, map, Observable, of, startWith, Subject, takeUntil, tap} from "rxjs";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatAutocompleteSelectedEvent, MatAutocompleteModule} from "@angular/material/autocomplete";
-import {NgxColorsModule} from "ngx-colors";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {UserService} from "../../servises/user.service";
+import {NgxColorsModule} from "ngx-colors";
+import {UserService} from "@services";
 
 const COLOR_FORMAT_REGEX = /^#(?:[0-9a-fA-F]{3}){1,2}$|^rgba?\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}(?:\s*,\s*\d*\.?\d+\s*)?\)$|^hsla?\(\s*\d{1,3}\s*,\s*\d{1,3}%?\s*,\s*\d{1,3}%?(?:\s*,\s*\d*\.?\d+\s*)?\)$/;
 

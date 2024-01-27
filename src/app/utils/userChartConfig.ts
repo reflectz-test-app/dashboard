@@ -1,5 +1,6 @@
-import {Gender, User} from "../interfaces/user";
 import {ChartConfiguration, Tick, TooltipItem} from "chart.js";
+import {User} from "@interfaces";
+import {UserGender} from "@types";
 
 interface EngineByGenderStat {
   engine: string,
@@ -99,7 +100,7 @@ export function mostPickedColorsByAgeConf(users: User[]) {
   return config;
 }
 export function mostPickedEngineByGenderConf(users: User[]) {
-  const genderStat: Map<Gender, number> = new Map();
+  const genderStat: Map<UserGender, number> = new Map();
   const formattedMapStat = users.reduce((acc, user) => {
     const engine = user.engine;
     if (!acc.has(engine)) {
@@ -118,21 +119,18 @@ export function mostPickedEngineByGenderConf(users: User[]) {
     return acc;
   }, new Map<string, EngineByGenderStat>());
   const labels = Array.from(formattedMapStat.values()).map(el => {
-    // return `${el.engine} (${el.userCounter})`
     return `${el.engine}`
   });
 
   const datasets: {
     label: string,
-    data: number[], // Всего 50 мужчин ['Бензиновый = 25 = 50%', 'Электрический = 5 = 10%', 'Газовый = 20 = 40%']
+    data: number[],
     stack: string,
   }[] =  Array.from(genderStat.entries()).map(e => {
     const gender = e[0];
-    const counter = e[1];
 
     const data: number[] = [];
     Array.from(formattedMapStat.values()).forEach(el => {
-      // data.push(Number(((el[gender] / counter) * 100).toFixed(1)))
       data.push(el[gender])
     })
 
@@ -151,7 +149,6 @@ export function mostPickedEngineByGenderConf(users: User[]) {
     type: 'bar',
     data,
     options: {
-      // indexAxis: 'y',
       responsive: true,
       scales: {
         x: {
@@ -162,7 +159,6 @@ export function mostPickedEngineByGenderConf(users: User[]) {
           beginAtZero: true,
           max: users.length,
           ticks: {
-            // callback: (tickValue: number | string, index: number, ticks: Tick[]) => `${tickValue}%`
             callback: (tickValue: number | string, index: number, ticks: Tick[]) => `${tickValue}`
           }
         }
@@ -182,7 +178,6 @@ export function mostPickedEngineByGenderConf(users: User[]) {
         tooltip: {
           callbacks: {
             label: (context: TooltipItem<'bar'>) => {
-              // return `${context.parsed.y}%`;
               return `${context.dataset.stack}: ${context.formattedValue}`;
             }
           }
@@ -239,7 +234,4 @@ export function mostCommonHobbyConf(users: User[]) {
     },
   };
   return config
-}
-export function cityWithMostVisitorsConf(users: User[]) {
-
 }

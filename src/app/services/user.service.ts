@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {User} from "../interfaces/user";
 import {Observable, of} from "rxjs";
+import {User} from "@interfaces";
 
 export type id = string;
 

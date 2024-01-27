@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {NgIf} from "@angular/common";
+
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {circleMarker, latLng, latLngBounds, Map, MapOptions, tileLayer} from 'leaflet';
-import {Geo} from "../../interfaces/geo";
-import {NgIf} from "@angular/common";
+
+import {GeoDot} from "@interfaces";
 
 @Component({
   selector: 'app-map',
@@ -17,7 +19,7 @@ import {NgIf} from "@angular/common";
 })
 export class MapComponent {
   private map: Map | undefined;
-  private _dots!: Geo[] ;
+  private _dots!: GeoDot[] ;
   showMap = false;
   options: MapOptions = {
     layers: [
@@ -32,7 +34,7 @@ export class MapComponent {
     maxBoundsViscosity: 1.0,
   };
 
-  @Input() set dots(d: Geo[]) {
+  @Input() set dots(d: GeoDot[]) {
     this._dots = d.sort((a, b) => b.userCount - a.userCount)!;
     this.updateOptions();
   };

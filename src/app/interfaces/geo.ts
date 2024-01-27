@@ -1,4 +1,4 @@
-export interface Geo {
+export interface GeoDot {
   lat: string,
   lon: string,
   userCount: number,
@@ -6,13 +6,13 @@ export interface Geo {
   originalCityName: string
 }
 
-export interface GeoModel {
+export interface GeoRequestDto {
   counter: number,
   city: string,
   query: string
 }
 
-export interface GeoResponse {
+export interface GeoResponseDto {
   userCount: number,
   "place_id": number,
   "licence": string,

@@ -7,21 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {Chart, ChartConfiguration, ChartType, registerables} from "chart.js";
-import {UserService} from "../../servises/user.service";
-import {
-  mostCommonHobbyConf,
-  mostPickedColorsByAgeConf,
-  mostPickedEngineByGenderConf
-} from "../../utils/userChartConfig";
-import {
-  DisplayGrid,
-  GridsterComponent,
-  GridsterConfig,
-  GridsterItem,
-  GridsterItemComponent,
-  GridType
-} from "angular-gridster2";
+import {DatePipe, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {
   MatCell, MatCellDef,
@@ -32,13 +18,24 @@ import {
   MatRow, MatRowDef,
   MatTable, MatTableDataSource
 } from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {User} from "../../interfaces/user";
-import {DatePipe, NgIf} from "@angular/common";
-import {MapComponent} from "../../components/map/map.component";
-import {GeoService} from "../../servises/geo.service";
-import {Geo} from "../../interfaces/geo";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {
+  DisplayGrid,
+  GridsterComponent,
+  GridsterConfig,
+  GridsterItem,
+  GridsterItemComponent,
+  GridType
+} from "angular-gridster2";
+import {Chart, ChartConfiguration, ChartType, registerables} from "chart.js";
+import {MapComponent} from "../../components/map/map.component";
+import {
+  mostCommonHobbyConf,
+  mostPickedColorsByAgeConf,
+  mostPickedEngineByGenderConf
+} from "@utils";
+import {User, GeoDot} from "@interfaces";
+import {GeoService, UserService} from "@services";
 
 @Component({
   selector: 'app-analytics',
@@ -57,7 +54,6 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     MatCellDef,
     MatHeaderRowDef,
     MatRowDef,
-    MatPaginator,
     NgIf,
     DatePipe,
     MapComponent,
@@ -81,7 +77,7 @@ export class AnalyticsComponent implements AfterViewInit, OnInit {
   options!: GridsterConfig;
   dashboard!: Array<GridsterItem>;
   showMap = false;
-  dots: Geo[] | undefined;
+  dots: GeoDot[] | undefined;
 
   constructor(private userService: UserService, private cdr: ChangeDetectorRef, private geo: GeoService) {
     setInterval(() => {

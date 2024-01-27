@@ -1,10 +1,11 @@
-export type Gender = 'male' | 'female';
+import {UserGender} from "@types";
+
 export interface User {
   "birthday": string,
   "email": string,
   "firstName": string,
   "lastName": string,
-  "gender": Gender,
+  "gender": UserGender,
   "address": string,
   "city": string,
   "country": string,

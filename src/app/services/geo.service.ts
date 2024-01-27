@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {forkJoin, map, Observable} from "rxjs";
-import {Geo, GeoModel, GeoResponse} from "../interfaces/geo";
+import {GeoDot, GeoRequestDto, GeoResponseDto} from "@interfaces";
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class GeoService {
 
   constructor(private http: HttpClient) {}
 
-  geocode(citiesData: GeoModel[]): Observable<Geo[]> {
+  geocode(citiesData: GeoRequestDto[]): Observable<GeoDot[]> {
     const cityQuery = citiesData.map(el => el.query)
     const reqSet =  cityQuery.map(city => {
       const params = {
@@ -19,7 +19,7 @@ export class GeoService {
         format: 'json',
         limit: 1,
       };
-      return this.http.get<[GeoResponse]>(this.nominatimUrl, { params });
+      return this.http.get<[GeoResponseDto]>(this.nominatimUrl, { params });
     })
 
     return forkJoin(reqSet).pipe(
